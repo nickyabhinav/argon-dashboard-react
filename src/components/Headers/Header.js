@@ -18,17 +18,61 @@
 
 // reactstrap components
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
-
+import { useState, useEffect } from 'react';
 const Header = () => {
+  const [data, setData] = useState(null);
+  const [agentId, setAgentId] = useState(null);
+
+  const baseUrl = process.env.REACT_APP_BASE_URL;
+  useEffect(() => {
+
+    const fetchData = async () => {
+      const dataFromLocalStorage = localStorage.getItem('apiData');
+
+      if (dataFromLocalStorage) {
+        const parsedData = JSON.parse(dataFromLocalStorage);
+        setAgentId(parsedData.agentId);
+
+      }
+      try {
+        const response = await fetch(baseUrl + '/dashboard', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            Key: '9df96bb80bdb81a65648ccae348d60d6f54ea887',
+            AgentID: "26898",
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const dash = data.dashBoardData;
+        setData(dash);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  },);
+
+
+
   return (
     <>
       <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">
         <Container fluid>
-          <div className="header-body">
+          {data && (<div className="header-body">
             {/* Card stats */}
             <Row>
-              <Col lg="6" xl="3">
-                <Card className="card-stats mb-4 mb-xl-0">
+              {data.map((key) => (<Col lg="6" xl="4">
+
+                <Card className="card-stats mb-4 mb-xl-4">
                   <CardBody>
                     <Row>
                       <div className="col">
@@ -36,10 +80,16 @@ const Header = () => {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Traffic
+                          {key.service}
                         </CardTitle>
+                        This month
                         <span className="h2 font-weight-bold mb-0">
-                          350,897
+                          {" "}{key.currentMonthAmount}
+                        </span>
+                        <br />
+                        Last month
+                        <span className="h4 font-weight-bold mb-0">
+                          {" "}{key.previousMonthAmount}
                         </span>
                       </div>
                       <Col className="col-auto">
@@ -49,100 +99,22 @@ const Header = () => {
                       </Col>
                     </Row>
                     <p className="mt-3 mb-0 text-muted text-sm">
-                      <span className="text-success mr-2">
-                        <i className="fa fa-arrow-up" /> 3.48%
-                      </span>{" "}
-                      <span className="text-nowrap">Since last month</span>
+                      {key.businessVolumegrowth.startsWith("-") ? (
+                        <span className="text-danger mr-2">
+                          <i className="fa fa-arrow-down" /> {key.businessVolumegrowth} %
+                        </span>
+                      ) : (<span className="text-success mr-2">
+                        <i className="fa fa-arrow-up" /> {key.businessVolumegrowth} %
+                      </span>)}
+                      {" "}
+                      <span className="text-nowrap"> in current month</span>
                     </p>
                   </CardBody>
                 </Card>
-              </Col>
-              <Col lg="6" xl="3">
-                <Card className="card-stats mb-4 mb-xl-0">
-                  <CardBody>
-                    <Row>
-                      <div className="col">
-                        <CardTitle
-                          tag="h5"
-                          className="text-uppercase text-muted mb-0"
-                        >
-                          New users
-                        </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">2,356</span>
-                      </div>
-                      <Col className="col-auto">
-                        <div className="icon icon-shape bg-warning text-white rounded-circle shadow">
-                          <i className="fas fa-chart-pie" />
-                        </div>
-                      </Col>
-                    </Row>
-                    <p className="mt-3 mb-0 text-muted text-sm">
-                      <span className="text-danger mr-2">
-                        <i className="fas fa-arrow-down" /> 3.48%
-                      </span>{" "}
-                      <span className="text-nowrap">Since last week</span>
-                    </p>
-                  </CardBody>
-                </Card>
-              </Col>
-              <Col lg="6" xl="3">
-                <Card className="card-stats mb-4 mb-xl-0">
-                  <CardBody>
-                    <Row>
-                      <div className="col">
-                        <CardTitle
-                          tag="h5"
-                          className="text-uppercase text-muted mb-0"
-                        >
-                          Sales
-                        </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">924</span>
-                      </div>
-                      <Col className="col-auto">
-                        <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                          <i className="fas fa-users" />
-                        </div>
-                      </Col>
-                    </Row>
-                    <p className="mt-3 mb-0 text-muted text-sm">
-                      <span className="text-warning mr-2">
-                        <i className="fas fa-arrow-down" /> 1.10%
-                      </span>{" "}
-                      <span className="text-nowrap">Since yesterday</span>
-                    </p>
-                  </CardBody>
-                </Card>
-              </Col>
-              <Col lg="6" xl="3">
-                <Card className="card-stats mb-4 mb-xl-0">
-                  <CardBody>
-                    <Row>
-                      <div className="col">
-                        <CardTitle
-                          tag="h5"
-                          className="text-uppercase text-muted mb-0"
-                        >
-                          Performance
-                        </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">49,65%</span>
-                      </div>
-                      <Col className="col-auto">
-                        <div className="icon icon-shape bg-info text-white rounded-circle shadow">
-                          <i className="fas fa-percent" />
-                        </div>
-                      </Col>
-                    </Row>
-                    <p className="mt-3 mb-0 text-muted text-sm">
-                      <span className="text-success mr-2">
-                        <i className="fas fa-arrow-up" /> 12%
-                      </span>{" "}
-                      <span className="text-nowrap">Since last month</span>
-                    </p>
-                  </CardBody>
-                </Card>
-              </Col>
+              </Col>))}
+
             </Row>
-          </div>
+          </div>)}
         </Container>
       </div>
     </>

@@ -1,27 +1,18 @@
-/*!
 
-=========================================================
-* Argon Dashboard React - v1.2.3
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import Index from "views/Index.js";
 import Profile from "views/examples/Profile.js";
-import Maps from "views/examples/Maps.js";
+import SettlementPage from "views/examples/SettlementPage.js";
 import Register from "views/examples/Register.js";
 import Login from "views/examples/Login.js";
-import Tables from "views/examples/Tables.js";
 import Icons from "views/examples/Icons.js";
+import DMT from "views/examples/DMT/Dmt";
+import DmtRecipient from "views/examples/DMT/DmtRecipient"
+import DmtFinal from "views/examples/DMT/DMTFinalSubmit"
+import RegisterBank from "components/SubComponents/RegisterBank";
+import CreditCardBillPaymentOptionOne from "components/Sidebar/CreditCardBillPaymentOptionOne";
+import Recharge from "views/examples/Recharge/Recharge";
+
+
 
 var routes = [
   {
@@ -29,34 +20,51 @@ var routes = [
     name: "Dashboard",
     icon: "ni ni-tv-2 text-primary",
     component: <Index />,
+    layout: "/admin", 
+  },
+  {
+    path: "/dmt",
+    name: "DMT",
+    icon: "https://portal.bankit.in:9090/Demo/wl_icons/10002/DMT_icon.png",
+    component: <DMT/>,
     layout: "/admin",
   },
   {
-    path: "/icons",
-    name: "Icons",
-    icon: "ni ni-planet text-blue",
-    component: <Icons />,
+    path: "/dmt-recipient",
+    name: "DMT-RECIPIENT",
+    icon: "https://portal.bankit.in:9090/Demo/wl_icons/10002/DMT_icon.png",
+    component: <DmtRecipient/>,
     layout: "/admin",
   },
   {
-    path: "/maps",
-    name: "Maps",
-    icon: "ni ni-pin-3 text-orange",
-    component: <Maps />,
+    path: "/dmt-submit",
+    name: "DMT-FINAL",
+    icon: "https://portal.bankit.in:9090/Demo/wl_icons/10002/DMT_icon.png",
+    component: <DmtFinal/>,
     layout: "/admin",
   },
   {
-    path: "/user-profile",
-    name: "User Profile",
-    icon: "ni ni-single-02 text-yellow",
+    name: "AEPS",
+  },
+  {
+    path: "/mATM",
+    name: "mATM",
+    icon: "https://portal.bankit.in:9090/Demo/wl_icons/10002/micro.png",
     component: <Profile />,
     layout: "/admin",
   },
   {
-    path: "/tables",
-    name: "Tables",
+    path: "/bbps",
+    name: "BBPS",
+    icon: "https://portal.bankit.in:9090/Demo/wl_icons/10002/ic_bbps.png",
+    component: <Profile />,
+    layout: "/admin",
+  },
+  {
+    path: "/recharge",
+    name: "RECHARGE",
     icon: "ni ni-bullet-list-67 text-red",
-    component: <Tables />,
+    component: <Recharge />,
     layout: "/admin",
   },
   {
@@ -73,5 +81,84 @@ var routes = [
     component: <Register />,
     layout: "/auth",
   },
+  {
+    path: "/travel",
+    name: "TRAVEL",
+    icon: "https://portal.bankit.in:9090/Demo/wl_icons/10002/DMT_icon.png",
+    component: <Profile />,
+    layout: "/admin",
+  },
+
+  {
+    path: "/settlement",
+    name: "SETTLEMENT",
+    icon: "https://portal.bankit.in:9090/Demo/wl_icons/10002/settlementnew.png",
+    component: <SettlementPage />,
+    layout: "/admin",
+  },
+  {
+    path: "/offer",
+    name: "OFFER",
+    icon: "https://portal.bankit.in:9090/Demo/wl_icons/10002/yes.png",
+    component: <Profile />,
+    layout: "/admin",
+  },
+  {
+    path: "/insurance",
+    name: "INSURANCE",
+    icon: "https://portal.bankit.in:9090/Demo/wl_icons/10002/ic_insurance.png",
+    component: <Profile />,
+    layout: "/admin",
+  },
+  {
+    path: "/loans",
+    name: "LOANS",
+    icon: "ni ni-single-02 text-yellow",
+    component: <Profile />,
+    layout: "/admin",
+  },
+  {
+    path: "/cms",
+    name: "CMS",
+    icon: "https://portal.bankit.in:9090/Demo/wl_icons/10002/cms.png",
+    component: <Profile />,
+    layout: "/admin",
+  },
+  {
+    path: "/billing",
+    name: "BILLING",
+    icon: "ni ni-key-25 text-info",
+    component: <Profile />,
+    layout: "/admin",
+  },
+  {
+    path: "/g2c",
+    name: "G2C",
+    icon: "ni ni-circle-08 text-pink",
+    component: <Profile />,
+    layout: "/auth",
+  },
+  {
+    path: "/cms",
+    name: "CMS",
+    icon: "https://portal.bankit.in:9090/Demo/wl_icons/10002/cms.png",
+    component: <Profile />,
+    layout: "/admin",
+  },
+  {
+    path: "/irctc",
+    name: "IRCTC",
+    icon: "ni ni-key-25 text-info",
+    component: <Profile />,
+    layout: "/admin",
+  },
+  {
+    path: "/cc",
+    name: "CC PAYMENT",
+    icon: "https://portal.bankit.in:9090/Demo/wl_icons/10002/ic_water.png",
+    component: <CreditCardBillPaymentOptionOne />,
+    layout: "/admin",
+  },
+  
 ];
 export default routes;

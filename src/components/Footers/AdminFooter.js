@@ -19,8 +19,21 @@
 
 // reactstrap components
 import { Container, Row, Col, Nav, NavItem, NavLink } from "reactstrap";
+import { useState , useEffect } from "react";
 
 const Footer = () => {
+
+  const [storedData, setStoredData] = useState(null);
+
+  useEffect(() => {
+    const dataFromLocalStorage = localStorage.getItem('apiData');
+  
+    if (dataFromLocalStorage) {
+      const parsedData = JSON.parse(dataFromLocalStorage);
+      setStoredData(parsedData);
+    }
+  }, []);
+
   return (
     <footer className="footer">
       <Row className="align-items-center justify-content-xl-between">
